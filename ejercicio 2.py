@@ -1,59 +1,38 @@
-class viajero:
+from classviajero_ import viajero
+import csv
+import sys
 
-    def __init__(self, num, dni, nom, apel, millas_acum):
-        self.num = num
-        self.dni = dni
-        self.nom = nom
-        self.apel = apel
-        self.millas_acum = millas_acum
+def menu(viajeros,numero):
+                 
+    print("Menu")
+    print("1- Consultar cantidad de millas ")
+    print("2- Acumular millas ")
+    print("3- Canjear millas ")   
+    print("4- Salir")
+    option = int(input(" Ingrese opcion "))
 
-    def cantidad_total_de_millas(self):
-        return self.millas_acum
+    while option !=4:
+        if option == 1:
+            viajeros[numero].option1()
+        elif option == 2:
+            viajeros[numero].option2()
+        elif option == 3:
+            viajeros[numero].option3()
 
-    def acumular_millas(self, millas):
-        self.millas_acum += millas
-        
-
-    def canjear_millas(self, millas):
-        if self.millas_acum >= millas:
-            self.millas_acum -= millas
-            return self.millas_acum
-        else:
-            print("No tiene suficientes millas para canjear.")
-
-per1 = viajero(1, 22123123, "Ricardo", "Paz", 1000)
-per2 = viajero(2, 23000000, "Rojas", "Rosas", 2000)
-per3 = viajero(3, 24000000, "Raul", "Romero", 3000)
-per4 = viajero(4, 25000000, "Roman", "Ruiz", 4000)
-
-lista = [per1, per2, per3, per4]
+        option = int(input(" Ingrese opcion "))
 
 if __name__=="__main__":
-
-
-    while True:
-        print("Menu")
-        numero = input("Ingrese numero de viajero frecuente: ")
-        for viajero in lista:
-            if viajero.num == int(numero):
-                break
-            else:
-                print("No se encontró el número de viajero frecuente.")
-                continue
-            print("1. Consultar cantidad de millas")
-            print("2. Acumular millas")
-            print("3. Canjear millas")
-        print("4. Salir")
-        opcion = int(input())
-        if opcion == 1:
-            print("El número de millas que tiene acumuladas son:", viajero.cantidad_total_de_millas())
-        elif opcion == 2:
-                millas = int(input("Ingrese millas para acumular: "))
-                viajero.acumular_millas(millas)
-                print("Se han acumulado", millas, "millas. Millas totales:", viajero.cantidad_total_de_millas())
-        elif opcion == 3:
-                    milla=int(input("Ingrese millas a canjear "))
-                    print("Se han canjeado", milla, "millas. Millas restantes:", viajero.canjear_millas(milla))
+     viajeros = []
+     with open("dataviajeros.csv", "r") as archivoviajeros:
+         next(archivoviajeros)
+         for file in archivoviajeros:
+             file = file.split(";")
+             via = viajero(file[0],file[1],file[2],file[3])
+             viajeros.append(via)
+         print("Info de viajeros cargada con éxito.")
+           
+             
+     numero = int(input("Ingrese numero de vijaero frecuente  "))
+     menu(viajeros,numero)
         
-        elif opcion==4:
-            exit()
+      
